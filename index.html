@@ -76,16 +76,19 @@
     </div>
 
     <!-- Order form will load here -->
-    <div id="orderFormContainer"></div>
+    <div id="orderFormContainer" style="display:none;">
+  <iframe src="order.html" style="width:100%; height: 700px; border:none;"></iframe>
+</div>
 
-    <script>
-      function showOrderForm() {
-        google.script.run.withSuccessHandler(function (html) {
-          document.querySelector('.card').style.display = 'none';
-          document.getElementById('orderFormContainer').innerHTML = html;
-          document.getElementById('orderSection').style.display = 'block';
-        }).include('order');
-      }
-    </script>
+<script>
+  function showOrderForm() {
+    // Hide the main card
+    document.querySelector('.card').style.display = 'none';
+
+    // Show the iframe form
+    document.getElementById('orderFormContainer').style.display = 'block';
+  }
+</script>
+
   </body>
 </html>
