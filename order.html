@@ -1,71 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>M&M Agro Farms</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      padding: 20px;
-      background: #f3f3f3;
-    }
-    .card {
-      background: #fff;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-    .card h1 {
-      color: green;
-    }
-    .card h2 {
-      color: red;
-      animation: blink 1s infinite;
-    }
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-    button {
-      padding: 12px 20px;
-      font-size: 18px;
-      border: none;
-      background-color: green;
-      color: white;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    iframe {
-      width: 100%;
-      height: 700px;
-      border: none;
-      margin-top: 20px;
-    }
-  </style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Order – Rainbow Fruit Bowl</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+  <nav>
+    <div class="container navwrap">
+      <div class="logo"><div class="mark"></div> Rainbow Fruit Bowl</div>
+      <div>
+        <a href="index.html">Home</a>
+        <a href="menu.html">Menu</a>
+        <a href="order.html">Order</a>
+      </div>
+    </div>
+  </nav>
 
-  <!-- Offer Card -->
-  <div class="card" id="offerCard">
-    <h1>Welcome to M&M Agro Farms</h1>
-    <h2>Special Offer: ₹850/Kg Pottel Mutton</h2>
-    <p>🚚 Doorstep delivery within 5 km of Kompally</p>
-    <button onclick="showOrderForm()">Order Now</button>
-  </div>
+  <main class="container" style="padding:24px 0;">
+    <div class="card">
+      <h2>Place your order</h2>
+      <p class="small">Delivery today 5–9 PM. Orders close at 4 PM.</p>
 
-  <!-- Order Form Iframe Container -->
-  <div id="orderFormContainer" style="display:none;">
-    <iframe src="order.html"></iframe>
-  </div>
+      <form id="orderForm">
+        <label>Name</label>
+        <input type="text" id="name" required>
+
+        <label>Mobile</label>
+        <input type="tel" id="mobile" required>
+
+        <label>Choose Bowl</label>
+        <select id="bowl">
+          <option value="Classic Rainbow" data-price="149">Classic Rainbow — ₹149</option>
+          <option value="Protein+ Rainbow" data-price="199">Protein+ Rainbow — ₹199</option>
+          <option value="Family Bowl" data-price="349">Family Bowl — ₹349</option>
+        </select>
+
+        <label>Quantity</label>
+        <input type="number" id="qty" min="1" value="1">
+
+        <label>Add-ons <span class="small">(₹30 each)</span></label>
+        <div>
+          <label><input type="checkbox" class="addon" value="Chia Seeds"> Chia Seeds</label><br>
+          <label><input type="checkbox" class="addon" value="Honey Drizzle"> Honey Drizzle</label><br>
+          <label><input type="checkbox" class="addon" value="Extra Nuts"> Extra Nuts</label>
+        </div>
+
+        <label>Address</label>
+        <textarea id="address" required></textarea>
+
+        <label>Note (optional)</label>
+        <textarea id="note" placeholder="No bananas, please"></textarea>
+
+        <div class="total" id="total">Total: ₹0</div>
+        <button type="submit">Send via WhatsApp</button>
+      </form>
+
+      <p class="small">We open WhatsApp with your order overview. You can edit before sending.</p>
+      <div class="notice small">Admin number placeholder is set in the code. Replace it with your WhatsApp number.</div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">© <span id="yy"></span> Rainbow Fruit Bowl</div>
+  </footer>
 
   <script>
-    function showOrderForm() {
-      document.getElementById('offerCard').style.display = 'none';
-      document.getElementById('orderFormContainer').style.display = 'block';
-    }
-  </script>
+    const ADDON_PRICE = 30;
+    const adminNumber = "910000000000"; // ← Replace with your full intl number (e.g., 91XXXXXXXXXX)
 
+    const bowlSel = document.getElementById('bowl');
+    const qtyEl = document.getElementById('qty');
+    const totalEl = document.getElementById('total');
+
+    function calcTotal(){
+      const price = parseInt(bowlSel.selectedOptions[0].dataset.price || "0", 10);
+      const qty = parseInt(qtyEl.value || "0", 10);
+      const addons = Array.from(document.querySelectorAll('.addon:checked'));
+      const addTotal = addons.length * ADDON_PRICE * qty; // add-ons per bowl
+      const total = (price * qty) + addTotal;
+      totalEl.textContent = `Total: ₹${total}`;
+      return { price, qty, addTotal, total, addons: addons.map(a=>a.value) };
+    }
+    bowlSel.addEventListener('change', calcTotal);
+    qtyEl.addEventListener('input', calcTotal);
+    document.querySelectorAll('.addon').forEach(cb => cb.addEventListener('change', calcTotal));
+    calcTotal();
+
+    document.getElementById('orderForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const mobile = document.getElementById('mobile').value.trim();
+      const address = document.getElementById('address').value.trim();
+      const note = document.getElementById('note').value.trim();
+      const bowl = bowlSel.value;
+      const { price, qty, addTotal, total, addons } = calcTotal();
+
+      const lines = [
+        "🌈 *Rainbow Fruit Bowl*",
+        `👤 ${name}`,
+        `📞 ${mobile}`,
+        `🥗 ${bowl} x ${qty} @ ₹${price}`,
+        addons.length ? `➕ Add-ons: ${addons.join(", ")} (₹${ADDON_PRICE} each)` : "➕ Add-ons: None",
+        `🏷️ Subtotal add-ons: ₹${addTotal}`,
+        `💰 *Total: ₹${total}*`,
+        `📍 ${address}`,
+        note ? `📝 ${note}` : "📝 -"
+      ];
+
+      const msg = encodeURIComponent(lines.join("\n"));
+      window.open(`https://wa.me/${adminNumber}?text=${msg}`, "_blank");
+    });
+    document.getElementById('yy').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>

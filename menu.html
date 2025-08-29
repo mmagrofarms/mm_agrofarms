@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Menu – Rainbow Fruit Bowl</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <nav>
+    <div class="container navwrap">
+      <div class="logo"><div class="mark"></div> Rainbow Fruit Bowl</div>
+      <div>
+        <a href="index.html">Home</a>
+        <a href="menu.html">Menu</a>
+        <a href="order.html">Order</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container" style="padding:28px 0">
+    <h1>Menu</h1>
+    <div class="card">
+      <table>
+        <thead><tr><th>Bowl</th><th>What’s inside</th><th>Price</th></tr></thead>
+        <tbody>
+          <tr><td>Classic Rainbow</td><td>Apple, Banana, Papaya, Watermelon, Grapes, Pineapple, Pomegranate</td><td>₹149</td></tr>
+          <tr><td>Protein+ Rainbow</td><td>Classic + Almonds, Cashews, Pumpkin Seeds</td><td>₹199</td></tr>
+          <tr><td>Family Bowl</td><td>Classic × 3 + Berries (seasonal)</td><td>₹349</td></tr>
+        </tbody>
+      </table>
+      <p class="small">Ingredients may vary seasonally. We’ll substitute with the freshest available produce.</p>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">© <span id="yy"></span> Rainbow Fruit Bowl</div>
+  </footer>
+  <script>document.getElementById('yy').textContent = new Date().getFullYear();</script>
+</body>
+</html>
