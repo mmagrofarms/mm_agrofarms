@@ -5,6 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Rainbow Fruit Bowl</title>
   <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* Apple Styles */
+    .apple {
+      width: 200px;
+      margin: 20px auto;
+      display: block;
+    }
+    .apple text {
+      font-size: 14px;
+      font-weight: bold;
+      fill: #333;
+    }
+  </style>
 </head>
 <body>
   <nav>
@@ -59,6 +72,31 @@
         <div><span class="badge">Hygienic Prep</span></div>
         <div><span class="badge">Eco Pack</span></div>
       </div>
+    </section>
+
+    <!-- Apple Shape with Fruit Text -->
+    <section class="card">
+      <h3>Today’s Fruits</h3>
+      <svg class="apple" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
+        <!-- Apple Outline -->
+        <path d="M100,20 
+                 C60,0 20,40 30,100 
+                 C40,160 80,210 100,210 
+                 C120,210 160,160 170,100 
+                 C180,40 140,0 100,20 Z"
+              fill="none" stroke="red" stroke-width="4"/>
+
+        <!-- Stem -->
+        <rect x="95" y="5" width="10" height="20" fill="brown"/>
+
+        <!-- Text Inside -->
+        <text x="100" y="80" text-anchor="middle">Monday</text>
+        <text x="100" y="100" text-anchor="middle">Apple</text>
+        <text x="100" y="120" text-anchor="middle">Papaya</text>
+        <text x="100" y="140" text-anchor="middle">Watermelon</text>
+        <text x="100" y="160" text-anchor="middle">Pomegranate</text>
+        <text x="100" y="180" text-anchor="middle">Muskmelon</text>
+      </svg>
     </section>
   </main>
 
